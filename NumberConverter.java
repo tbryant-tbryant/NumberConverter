@@ -54,45 +54,53 @@ public class NumberConverter {
 	}
 	
 	public static void askForNumAndBase() {
-		Scanner userInput = new Scanner(System.in);
-		System.out.print("Please enter a number. ");
-		int needsConversion = userInput.nextInt();
-		int oldBase = askForOldBase(needsConversion);
-		int newBase = askForNewBase();
-		System.out.println();
-		fromDecimal(toDecimal("" + needsConversion, oldBase), newBase, oldBase, needsConversion);
-		System.out.println();
-	}
-	
-	public static int askForOldBase(int needsConversion) {
-		Scanner userInput = new Scanner(System.in);
-		System.out.print("What base is this number in? ");
-		int oldBase = userInput.nextInt();
-		if (oldBase == 2) {
-			String checkForBinary = "" + needsConversion;
-			for (int i = 0; i < checkForBinary.length(); i++) {
-				if (Integer.parseInt(checkForBinary.substring(i, i + 1)) != 1 &&
-					Integer.parseInt(checkForBinary.substring(i, i + 1)) != 0) {
-						System.out.println("Please type a binary number.");
-						askForOldBase(needsConversion);
-				}
-			}
-		} else if (!((oldBase != 1 && oldBase <= 10) || oldBase == 16)) {
-			System.out.println("Please choose a valid base!");
-			askForOldBase(needsConversion);
-		}
-		return oldBase;
-	}
-	
-	public static int askForNewBase() {
-		Scanner userInput = new Scanner(System.in);
-		System.out.print("Enter a base to convert this number to. ");
-		int newBase = userInput.nextInt();
-		if (!((newBase != 1 && newBase <= 10) || newBase == 16)) {
-			System.out.println("Please choose a valid base!");
-			askForNewBase();
-		}
-		return newBase;
-	}
+        	Scanner userInput = new Scanner(System.in);
+        	System.out.print("Please enter a number. ");
+        	int needsConversion = userInput.nextInt();
+        	int oldBase = askForOldBase(needsConversion);
+        	int newBase = askForNewBase();
+        	System.out.println();
+        	fromDecimal(toDecimal("" + needsConversion, oldBase), newBase, oldBase, needsConversion);
+        	System.out.println();
+    	}
+     
+    public static int askForOldBase(int needsConversion) {
+        Scanner userInput = new Scanner(System.in);
+        System.out.print("What base is this number in? ");
+        int oldBase = userInput.nextInt();
+        if (oldBase == 2) {
+            String checkForBinary = "" + needsConversion;
+            for (int i = 0; i < checkForBinary.length(); i++) {
+                if (Integer.parseInt(checkForBinary.substring(i, i + 1)) != 1 &&
+                    Integer.parseInt(checkForBinary.substring(i, i + 1)) != 0) {
+                        System.out.println("Please type a binary number.");
+                        askForOldBase(needsConversion);
+                }
+            }
+        } else if (!((oldBase != 1 && oldBase <= 10) || oldBase == 16)) {
+            System.out.println("Please choose a valid base!");
+            askForOldBase(needsConversion);
+        }
+        return oldBase;
+    }
+     
+    public static int askForNewBase() {
+        System.out.print("Enter a base to convert this number to. ");
+        boolean baseIsValid = newBaseIsValid();
+        while (baseIsValid == false) {
+            System.out.println("Please choose a valid base!");
+            newBaseIsValid();
+        }
+        return newBase;
+    }
+     
+    public static boolean newBaseIsValid() {
+        Scanner userInput = new Scanner(System.in);
+        int newBase = userInput.nextInt();
+        if (!((newBase != 1 && newBase <= 10) || newBase == 16)) {
+            return false;
+        }
+        return true;
+    }
 
 }
